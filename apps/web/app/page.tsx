@@ -1,6 +1,8 @@
 import Image, { type ImageProps } from "next/image";
-import { Button } from "@repo/ui/button";
 import styles from "./page.module.css";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 type Props = Omit<ImageProps, "src"> & {
   srcLight: string;
@@ -38,6 +40,19 @@ export default function Home() {
           <li className="text-green-800">Save and see your changes instantly.</li>
         </ol>
 
+        <div>
+          <Label htmlFor="test-input">Test</Label>
+          <Input
+            id="test-input"
+            name="test-input"
+            placeholder="Placeholder"
+            type="text"
+          />
+        </div>
+        <Button className="w-full mt-2">
+          Text ShadCN
+        </Button>
+
         <div className={styles.ctas}>
           <a
             className={styles.primary}
@@ -63,7 +78,7 @@ export default function Home() {
             Read our docs
           </a>
         </div>
-        <Button appName="web" className={styles.secondary}>
+        <Button className={styles.secondary}>
           Open alert
         </Button>
       </main>
