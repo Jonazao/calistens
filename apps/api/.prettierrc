@@ -1,4 +1,6 @@
 {
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
   "singleQuote": true,
   "trailingComma": "all"
 }
