@@ -1,14 +1,14 @@
-import { z } from 'zod'
+import { z } from 'zod';
 export type FormState =
   | {
       error?: {
-        name?: string[]
-        email?: string[]
-        password?: string[]
-      }
-      message?: string
+        name?: string[];
+        email?: string[];
+        password?: string[];
+      };
+      message?: string;
     }
-  | undefined
+  | undefined;
 
 export const SignupFormSchema = z.object({
   name: z
@@ -31,7 +31,7 @@ export const SignupFormSchema = z.object({
       message: 'Contain at least one special character.',
     })
     .trim(),
-})
+});
 
 export enum Role {
   ADMIN = 'ADMIN',
@@ -41,10 +41,19 @@ export enum Role {
 
 export type Session = {
   user: {
-    id: string
-    name: string
-    role: Role
-  }
-  accessToken: string
-  refreshToken: string
-}
+    id: string;
+    name: string;
+    role: Role;
+  };
+  accessToken: string;
+  refreshToken: string;
+};
+
+export const LoginFormSchema = z.object({
+  email: z.string().email({ message: 'Please enter a valid email.' }),
+  password: z.string().min(1, {
+    message: 'Password field must not be empty.',
+  }),
+});
+
+export type Nullable<T> = T | null;

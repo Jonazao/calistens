@@ -1,12 +1,12 @@
-'use client'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import SubmitButton from '@/components/buttons/SignInButton'
-import { signUp } from '@/lib/auth'
-import React, { useActionState } from 'react'
+'use client';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import SubmitButton from '@/components/buttons/SignInButton';
+import { signUp } from '@/lib/auth';
+import React, { useActionState } from 'react';
 
 const SignUpForm = () => {
-  const [state, action] = useActionState(signUp, undefined)
+  const [state, action] = useActionState(signUp, undefined);
   return (
     <form action={action}>
       <div className="flex flex-col gap-2">
@@ -45,7 +45,7 @@ const SignUpForm = () => {
         <SubmitButton>Sign up</SubmitButton>
       </div>
     </form>
-  )
-}
+  );
+};
 
-export default SignUpForm
+export default SignUpForm;

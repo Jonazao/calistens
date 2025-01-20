@@ -18,6 +18,6 @@ export class User {
   @Column({ nullable: true })
   hashedRefreshToken?: string;
 
-  @Column({ type: 'enum', enum: Role, default: Role.USER }) // Role column
+  @Column({ type: 'enum', enum: Role, default: Role.TRAINEE }) // Role column
   role: Role;
 }

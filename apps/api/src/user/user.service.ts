@@ -21,7 +21,7 @@ export class UserService {
     newUser.email = user.email;
     newUser.name = user.name;
     newUser.password = hashedPassword;
-    newUser.role = Role.USER;
+    newUser.role = Role.TRAINEE;
     return this.userRepository.save(newUser);
   }
 

@@ -1,10 +1,10 @@
-import Image, { type ImageProps } from "next/image";
-import styles from "./page.module.css";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
+import Image, { type ImageProps } from 'next/image';
+import styles from './page.module.css';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
 
-type Props = Omit<ImageProps, "src"> & {
+type Props = Omit<ImageProps, 'src'> & {
   srcLight: string;
   srcDark: string;
 };
@@ -36,8 +36,10 @@ export default function Home() {
         <ol>
           <li className="text-green-800">
             Get started by editing <code>apps/web/app/page.tsx</code>
-          </li >
-          <li className="text-green-800">Save and see your changes instantly.</li>
+          </li>
+          <li className="text-green-800">
+            Save and see your changes instantly.
+          </li>
         </ol>
 
         <div>
@@ -49,9 +51,7 @@ export default function Home() {
             type="text"
           />
         </div>
-        <Button className="w-full mt-2">
-          Text ShadCN
-        </Button>
+        <Button className="w-full mt-2">Text ShadCN</Button>
 
         <div className={styles.ctas}>
           <a
@@ -78,9 +78,7 @@ export default function Home() {
             Read our docs
           </a>
         </div>
-        <Button className={styles.secondary}>
-          Open alert
-        </Button>
+        <Button className={styles.secondary}>Open alert</Button>
       </main>
       <footer className={styles.footer}>
         <a

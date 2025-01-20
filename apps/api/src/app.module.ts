@@ -12,7 +12,7 @@ import { ConfigModule } from '@nestjs/config';
       type: 'mongodb', // Database type
       host: 'localhost', // MongoDB host
       port: 27017, // MongoDB port
-      database: 'test_db', // Replace with your database name
+      database: 'calistens', // Replace with your database name
       useUnifiedTopology: true, // Recommended for MongoDB
       autoLoadEntities: true, // Automatically load entities
     }),

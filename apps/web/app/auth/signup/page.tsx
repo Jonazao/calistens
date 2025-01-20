@@ -1,6 +1,6 @@
-import Link from 'next/link'
-import React from 'react'
-import SignUpForm from './signupForm'
+import Link from 'next/link';
+import React from 'react';
+import SignUpForm from './signupForm';
 
 const SignUpPage = () => {
   return (
@@ -14,7 +14,7 @@ const SignUpPage = () => {
         </Link>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SignUpPage
+export default SignUpPage;
