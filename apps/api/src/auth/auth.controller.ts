@@ -23,7 +23,7 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('signin')
-  @ApiBody({ type: SignInUserDto }) // Define Swagger request body
+  @ApiBody({ type: SignInUserDto })
   @ApiResponse({ status: 200, description: 'User authenticated successfully.' })
   @ApiResponse({ status: 401, description: 'Invalid credentials.' })
   login(@Body() signInUserDto: SignInUserDto, @Request() req) {

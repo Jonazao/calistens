@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from 'react';
 import { useFormStatus } from 'react-dom';
 import { Button } from '../ui/button';
 
-const SignInButton = ({ children }: PropsWithChildren) => {
+const SubmitButton = ({ children }: PropsWithChildren) => {
   const { pending } = useFormStatus();
 
   return (
@@ -12,4 +12,4 @@ const SignInButton = ({ children }: PropsWithChildren) => {
   );
 };
 
-export default SignInButton;
+export default SubmitButton;
