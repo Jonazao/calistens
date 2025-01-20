@@ -1,6 +1,6 @@
 import React from 'react';
 import { BACKEND_URL } from '@/lib/constants';
-import SignInForm from './SignInFormt';
+import SignInForm from './SignInForm';
 
 const SignInPage = () => {
   return (
