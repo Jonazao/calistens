@@ -44,3 +44,8 @@ export async function getSession(): Promise<Nullable<Session>> {
     redirect('/auth/signin');
   }
 }
+
+export async function deleteSession() {
+  const cookieResponse = await cookies();
+  await cookieResponse.delete('session');
+}

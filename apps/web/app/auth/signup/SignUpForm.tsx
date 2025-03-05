@@ -3,10 +3,21 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import SubmitButton from '@/components/buttons/SubmitButton';
 import { signUp } from '@/lib/auth';
-import React, { useActionState } from 'react';
+import React, { useActionState, useEffect } from 'react';
+import { useDrawer } from '@/components/providers/DrawerContext';
 
 const SignUpForm = () => {
   const [state, action] = useActionState(signUp, undefined);
+  const { setContent, toggleDrawer } = useDrawer();
+
+  useEffect(() => {
+    setContent(
+      <div>
+        <h2 className="text-xl font-bold">Example Drawer Content</h2>
+        <p>This content was set from the page.</p>
+      </div>
+    );
+  }, [setContent]);
   return (
     <form action={action}>
       <div className="flex flex-col gap-2">
@@ -43,6 +54,12 @@ const SignUpForm = () => {
           </div>
         )}
         <SubmitButton>Sign up</SubmitButton>
+        <button
+          onClick={toggleDrawer}
+          className="mt-4 p-2 bg-blue-500 text-white"
+        >
+          Toggle Drawer
+        </button>
       </div>
     </form>
   );
