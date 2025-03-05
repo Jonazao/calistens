@@ -3,65 +3,81 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import SubmitButton from '@/components/buttons/SubmitButton';
 import { signUp } from '@/lib/auth';
-import React, { useActionState, useEffect } from 'react';
-import { useDrawer } from '@/components/providers/DrawerContext';
+import React, { useActionState } from 'react';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Link } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
-const SignUpForm = () => {
+const SignUpForm = ({
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<'div'>) => {
   const [state, action] = useActionState(signUp, undefined);
-  const { setContent, toggleDrawer } = useDrawer();
-
-  useEffect(() => {
-    setContent(
-      <div>
-        <h2 className="text-xl font-bold">Example Drawer Content</h2>
-        <p>This content was set from the page.</p>
-      </div>
-    );
-  }, [setContent]);
   return (
-    <form action={action}>
-      <div className="flex flex-col gap-2">
-        {state?.message && (
-          <p className="text-sm text-red-500">{state.message}</p>
-        )}
-        <div>
-          <Label htmlFor="name">Name</Label>
-          <Input id="name" name="name" placeholder="John Doe" />
-        </div>
-        {state?.error?.name && (
-          <p className="text-sm text-red-500">{state.error.name}</p>
-        )}
-
-        <div>
-          <Label htmlFor="email">Email</Label>
-          <Input id="email" name="email" placeholder="john@example.com" />
-        </div>
-        {state?.error?.email && (
-          <p className="text-sm text-red-500">{state.error.email}</p>
-        )}
-        <div>
-          <Label htmlFor="password">Password</Label>
-          <Input id="password" name="password" type="password" />
-        </div>
-        {state?.error?.password && (
-          <div className="text-sm text-red-500">
-            <p>Password must:</p>
-            <ul>
-              {state.error.password.map((error) => (
-                <li key={error}>{error}</li>
-              ))}
-            </ul>
+    <div className={cn('flex flex-col gap-6', className)} {...props}>
+      <Card>
+        <CardHeader className="text-center">
+          <CardTitle className="text-xl">Welcome!</CardTitle>
+          <CardDescription>Create your account</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-6">
+            <form action={action} className="grid gap-6">
+              {state?.message && (
+                <p className="text-sm text-red-500">{state.message}</p>
+              )}
+              <div className="grid gap-2">
+                <Label htmlFor="name">Name</Label>
+                <div>
+                  <Input id="name" name="name" placeholder="m@example.com" />
+                  {state?.error?.email && (
+                    <p className="text-sm text-red-500">{state.error.email}</p>
+                  )}
+                </div>
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="email">Email</Label>
+                <div>
+                  <Input
+                    id="email"
+                    name="email"
+                    placeholder="m@example.com"
+                    type="email"
+                  />
+                  {state?.error?.email && (
+                    <p className="text-sm text-red-500">{state.error.email}</p>
+                  )}
+                </div>
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="password">Password</Label>
+                <div>
+                  <Input id="password" type="password" name="password" />
+                  {state?.error?.password && (
+                    <p className="text-sm text-red-500">
+                      {state.error.password}
+                    </p>
+                  )}
+                </div>
+              </div>
+              <SubmitButton>Sign In</SubmitButton>
+            </form>
+            <div className="text-center text-sm">
+              Already have an account?{' '}
+              <a href="signin" className="underline underline-offset-4">
+                Sign in
+              </a>
+            </div>
           </div>
-        )}
-        <SubmitButton>Sign up</SubmitButton>
-        <button
-          onClick={toggleDrawer}
-          className="mt-4 p-2 bg-blue-500 text-white"
-        >
-          Toggle Drawer
-        </button>
-      </div>
-    </form>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 
