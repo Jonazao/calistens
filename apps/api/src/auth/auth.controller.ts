@@ -27,7 +27,12 @@ export class AuthController {
   @ApiResponse({ status: 200, description: 'User authenticated successfully.' })
   @ApiResponse({ status: 401, description: 'Invalid credentials.' })
   login(@Body() signInUserDto: SignInUserDto, @Request() req) {
-    return this.authService.login(req.user.id, req.user.name, req.user.role);
+    return this.authService.login(
+      req.user.id,
+      req.user.name,
+      req.user.email,
+      req.user.role,
+    );
   }
 
   @Post('signout')

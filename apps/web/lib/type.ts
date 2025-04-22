@@ -44,6 +44,7 @@ export type Session = {
     id: string;
     name: string;
     role: Role;
+    email: string;
   };
   accessToken: string;
   refreshToken: string;

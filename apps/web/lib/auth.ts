@@ -70,6 +70,7 @@ export async function signIn(
         id: result.id,
         name: result.name,
         role: result.role,
+        email: result.email,
       },
       accessToken: result.accessToken,
       refreshToken: result.refreshToken,

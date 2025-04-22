@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings } from 'lucide-react';
+import { Home } from 'lucide-react';
 
 import {
   Sidebar,
@@ -12,6 +12,8 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from '@/components/ui/sidebar';
+import { NavUser } from './user/NavUser';
+import { getSession } from '@/lib/session';
 
 // Menu items.
 const items = [
@@ -22,7 +24,10 @@ const items = [
   },
 ];
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export async function AppSidebar({
+  ...props
+}: React.ComponentProps<typeof Sidebar>) {
+  const session = await getSession();
   return (
     <Sidebar
       className="top-[--header-height] !h-[calc(100svh-var(--header-height))]"
@@ -48,7 +53,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>Login User Data</SidebarFooter>
+      <SidebarFooter>
+        {session?.user && <NavUser user={session?.user} />}
+      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );

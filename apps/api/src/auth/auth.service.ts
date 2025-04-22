@@ -35,16 +35,17 @@ export class AuthService {
     const isPasswordMatched = verify(user.password, password);
     if (!isPasswordMatched)
       throw new UnauthorizedException('Invalid Credentials!');
-    return { id: user.id, name: user.name, role: user.role };
+    return { id: user.id, name: user.name, email: user.email, role: user.role };
   }
 
-  async login(userId: ObjectId, name: string, role: Role) {
+  async login(userId: ObjectId, name: string, email: string, role: Role) {
     const { accessToken, refreshToken } = await this.generateTokens(userId);
     const hashedRT = await hash(refreshToken);
     await this.userService.updateHashedRefreshToken(userId, hashedRT);
     return {
       id: userId,
-      name: name,
+      name,
+      email,
       role,
       accessToken,
       refreshToken,
