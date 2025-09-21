@@ -1,4 +1,3 @@
-// app/api/auth/login/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { serialize } from 'cookie';
 import { BACKEND_URL } from '@/lib/constants';
@@ -8,18 +7,16 @@ import { SignJWT } from 'jose';
 const secretKey = process.env.SESSION_SECRET_KEY;
 const encodedKey = new TextEncoder().encode(secretKey);
 
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest): Promise<Response> {
   const body = await req.json();
   const { email, password } = body;
-  const validatedFields = LoginFormSchema.safeParse({
-    email,
-    password,
-  });
+  const validatedFields = LoginFormSchema.safeParse({ email, password });
 
   if (!validatedFields.success) {
-    return {
-      error: validatedFields.error.flatten().fieldErrors,
-    };
+    return NextResponse.json(
+      { error: validatedFields.error.flatten().fieldErrors },
+      { status: 400 }
+    );
   }
 
   const loginRes = await fetch(`${BACKEND_URL}/auth/signin`, {
@@ -38,8 +35,8 @@ export async function POST(req: NextRequest) {
   }
 
   const result = await loginRes.json();
-
   const expiredAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+
   const payload = {
     user: {
       id: result.id,
@@ -50,6 +47,7 @@ export async function POST(req: NextRequest) {
     accessToken: result.accessToken,
     refreshToken: result.refreshToken,
   };
+
   const session = await new SignJWT(payload)
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
