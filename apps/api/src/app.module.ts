@@ -12,7 +12,7 @@ import { ConfigModule } from '@nestjs/config';
     TypeOrmModule.forRoot({
       type: 'mongodb',
       url: process.env.DATABASE_URL,
-      useUnifiedTopology: true,
+      ssl: process.env.NODE_ENV === 'production',
       autoLoadEntities: true,
     }),
     AuthModule,
