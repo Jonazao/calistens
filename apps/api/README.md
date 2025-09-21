@@ -1,3 +1,14 @@
+## Environment Variables
+
+The TypeORM configuration now uses the `DATABASE_URL` and `DB_NAME` variables from the `.env` file. Example:
+
+```env
+DATABASE_URL="mongodb+srv://<user>:<password>@cluster.mongodb.net"
+DB_NAME=calistens
+```
+
+Make sure to update your `.env` file with the correct MongoDB connection string and database name.
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>

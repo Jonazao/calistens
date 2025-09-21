@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   Post,
   Req,
   Request,
@@ -11,6 +12,9 @@ import { CreateUserDto } from 'src/user/dtos/create-user.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { SignInUserDto } from 'src/user/dtos/signin-user.dto';
 import { ApiBody, ApiResponse } from '@nestjs/swagger';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { Public } from './decorators/public.decorator';
+import { RefreshAuthGuard } from './guards/refresh-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -38,5 +42,23 @@ export class AuthController {
   @Post('signout')
   signOut(@Req() req) {
     return this.authService.signOut(req.user.id);
+  }
+
+  @Public()
+  @UseGuards(RefreshAuthGuard)
+  @Post('refresh')
+  refreshToken(@Request() req) {
+    return this.authService.refreshToken(
+      req.user.id,
+      req.user.name,
+      req.user.email,
+      req.user.role,
+    );
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('protected')
+  getAll(@Request() req) {
+    return { message: `Success ${JSON.stringify(req.user)}` };
   }
 }

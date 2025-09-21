@@ -83,3 +83,44 @@ export async function signIn(
     };
   }
 }
+
+export const refreshToken = async (oldRefreshToken: string) => {
+  try {
+    const response = await fetch(`${BACKEND_URL}/auth/refresh`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      // TODO:JGuerrero: refresh token is sent in the request body, move it to header bearer token
+      body: JSON.stringify({
+        refresh: oldRefreshToken,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to refresh token' + response.statusText);
+    }
+
+    const { accessToken, refreshToken, user } = await response.json();
+    console.log({ user });
+    // update session with new tokens
+
+    // const updateRes = await fetch('http://localhost:3000/api/auth/update', {
+    //   method: 'POST',
+    //   body: JSON.stringify({
+    //     accessToken,
+    //     refreshToken,
+    //     user,
+    //   }),
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   credentials: 'include', // ✅ REQUIRED to send/receive cookies
+    // });
+    // if (!updateRes.ok) throw new Error('Failed to update the tokens');
+    return { accessToken, refreshToken };
+  } catch (err) {
+    console.error('Refresh Token failed:', err);
+    return null;
+  }
+};

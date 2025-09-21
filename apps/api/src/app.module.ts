@@ -8,17 +8,15 @@ import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
     TypeOrmModule.forRoot({
-      type: 'mongodb', // Database type
-      host: 'localhost', // MongoDB host
-      port: 27017, // MongoDB port
-      database: 'calistens', // Replace with your database name
-      useUnifiedTopology: true, // Recommended for MongoDB
-      autoLoadEntities: true, // Automatically load entities
+      type: 'mongodb',
+      url: process.env.DATABASE_URL,
+      useUnifiedTopology: true,
+      autoLoadEntities: true,
     }),
     AuthModule,
     UserModule,
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
   ],
   controllers: [AppController],
   providers: [AppService],

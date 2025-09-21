@@ -68,4 +68,40 @@ export class AuthService {
       refreshToken,
     };
   }
+
+  async validateJwtUser(userId: string) {
+    const user = await this.userService.findOne(userId);
+    if (!user) throw new UnauthorizedException('User not found!');
+    return { id: user.id, name: user.name, email: user.email, role: user.role };
+  }
+
+  async validateRefreshToken(userId: string, refreshToken: string) {
+    const user = await this.userService.findOne(userId);
+    if (!user) throw new UnauthorizedException('User not found!');
+
+    const refreshTokenMatched = await verify(
+      user.hashedRefreshToken,
+      refreshToken,
+    );
+
+    if (!refreshTokenMatched)
+      throw new UnauthorizedException('Invalid Refresh Token!');
+    return { id: user.id, name: user.name, email: user.email, role: user.role };
+  }
+
+  async refreshToken(
+    userId: ObjectId,
+    name: string,
+    email: string,
+    role: Role,
+  ) {
+    const { accessToken, refreshToken } = await this.generateTokens(userId);
+    const hashedRT = await hash(refreshToken);
+    await this.userService.updateHashedRefreshToken(userId, hashedRT);
+    return {
+      user: { id: userId, name: name, email, role },
+      accessToken,
+      refreshToken,
+    };
+  }
 }

@@ -18,7 +18,6 @@ export async function createSession(payload: Session): Promise<void> {
     .sign(encodedKey);
 
   const cookieResponse = await cookies();
-
   cookieResponse.set('session', session, {
     httpOnly: true,
     secure: true,
@@ -48,4 +47,29 @@ export async function getSession(): Promise<Nullable<Session>> {
 export async function deleteSession() {
   const cookieResponse = await cookies();
   await cookieResponse.delete('session');
+}
+
+export async function updateTokens({
+  accessToken,
+  refreshToken,
+}: {
+  accessToken: string;
+  refreshToken: string;
+}) {
+  const cookieStore = await cookies();
+
+  const sessionCookie = cookieStore.get('session');
+  if (!sessionCookie) return null;
+
+  const { payload } = await jwtVerify<Session>(sessionCookie.value, encodedKey);
+
+  if (!payload) throw new Error('Session not found');
+
+  const newPayload: Session = {
+    user: payload.user,
+    accessToken,
+    refreshToken,
+  };
+
+  await createSession(newPayload);
 }
