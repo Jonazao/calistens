@@ -48,6 +48,8 @@ export type Session = {
   };
   accessToken: string;
   refreshToken: string;
+  iat?: number;
+  exp?: number;
 };
 
 export const LoginFormSchema = z.object({

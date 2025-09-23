@@ -1,6 +1,6 @@
 'use server';
 
-import { jwtVerify, SignJWT } from 'jose';
+import { jwtVerify, SignJWT, decodeJwt } from 'jose';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { Nullable, Session } from './type';
@@ -9,12 +9,18 @@ const secretKey = process.env.SESSION_SECRET_KEY;
 const encodedKey = new TextEncoder().encode(secretKey);
 
 export async function createSession(payload: Session): Promise<void> {
-  const expiredAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+  const decoded = decodeJwt(payload.accessToken);
+  const { iat, exp } = decoded;
+  if (!iat || !exp) {
+    return;
+  }
+  const issuedAt = new Date(iat * 1000);
+  const expiredAt = new Date(exp * 1000);
 
   const session = await new SignJWT(payload)
     .setProtectedHeader({ alg: 'HS256' })
-    .setIssuedAt()
-    .setExpirationTime('7d')
+    .setIssuedAt(issuedAt)
+    .setExpirationTime(expiredAt)
     .sign(encodedKey);
 
   const cookieResponse = await cookies();
